@@ -7,7 +7,7 @@ function addProductToCart(product) {
   // get existing cart from local storage or initialize empty array
   let cart = JSON.parse(localStorage.getItem("so-cart")) || [];
 
-  // add new product
+  // add new products to the cart for each time a user clicks the add to cart button. 
   cart.push(product);
 
   // save updated cart
