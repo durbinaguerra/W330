@@ -9,10 +9,9 @@ function addProductToCart(product) {
 
   // add new product
   cart.push(product);
-  
+
   // save updated cart
   localStorage.setItem("so-cart", JSON.stringify(cart));
-
 }
 
 // add to cart button event handler
