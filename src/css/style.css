@@ -261,3 +261,7 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+/* added by DU for total in cart */
+.hide {
+  display: none;
+}
