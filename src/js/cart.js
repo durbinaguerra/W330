@@ -1,4 +1,6 @@
 import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage } from "./utils.mjs";
+
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
@@ -25,4 +27,28 @@ function cartItemTemplate(item) {
   return newItem;
 }
 
+// added for Cart Total DU
+
+
+const cartItems = getLocalStorage("so-cart") || [];
+
+const cartFooter = document.querySelector(".cart-footer");
+const cartTotalElement = document.querySelector(".cart-total");
+
+if (cartItems.length > 0) {
+  // show footer
+  cartFooter.classList.remove("hide");
+
+  // calculate total
+  const total = cartItems.reduce((sum, item) => {
+    return sum + (item.FinalPrice || item.ListPrice);
+  }, 0);
+
+  // display total
+  cartTotalElement.innerHTML = `Total: $${total.toFixed(2)}`;
+}
+
+
+
 renderCartContents();
+
