@@ -12,19 +12,15 @@ function productCardTemplate(product) {
 
 
 export default class ProductList {
-  constructor(dataSource) {
+  constructor(category, dataSource, listElement) {
+    this.category = category;
     this.dataSource = dataSource;
-    this.products = [];
+    this.listElement = listElement;
   }
 
-  async init() {
-    this.products = await this.dataSource.getData();
-    console.log(this.products); // check if data loaded
-    this.render();
-  }
+  renderList(products) {
+    const htmlStrings = products.map(productCardTemplate);
 
-  render() {
-    console.log("Rendering products...");
-    console.table(this.products);
+    this.listElement.innerHTML = htmlStrings.join("");
   }
 }
