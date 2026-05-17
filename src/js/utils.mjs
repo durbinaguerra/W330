@@ -20,6 +20,21 @@ export function getParam(param) {
   return urlParams.get(param);
 }
 
+export function renderListWithTemplate(
+  templateFn,
+  parentElement,
+  list,
+  position = "afterbegin",
+  clear = false,
+) {
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+
+  const htmlStrings = list.map((item) => templateFn(item));
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
