@@ -29,23 +29,23 @@ function cartItemTemplate(item) {
 
 // added for Cart Total DU
 
-
 const cartItems = getLocalStorage("so-cart") || [];
 
 const cartFooter = document.querySelector(".cart-footer");
 const cartTotalElement = document.querySelector(".cart-total");
 
-if (cartItems.length > 0 && cartFooter && cartTotalElement) {
-  // show footer
+function calculateTotal(items) {
+  return items.reduce((total, item) => {
+    return total + item.FinalPrice;
+  }, 0);
+}
+
+if (cartItems.length > 0) {
+  const total = calculateTotal(cartItems);
+
   cartFooter.classList.remove("hide");
 
-  // calculate total
-  const total = cartItems.reduce((sum, item) => {
-    return sum + (item.FinalPrice || item.ListPrice);
-  }, 0);
-
-  // display total
-  cartTotalElement.innerHTML = `Total: $${total.toFixed(2)}`;
+  cartTotalElement.textContent = `Total: $${total.toFixed(2)}`;
 }
 
 
