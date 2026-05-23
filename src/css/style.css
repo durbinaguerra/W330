@@ -203,6 +203,17 @@ button {
   margin: 0.5em 0;
 }
 
+/* Discount badge styling */
+.discount-badge {
+  background: red;
+  color: white;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 5px;
+  display: inline-block;
+}
+
 .card__brand {
   font-size: var(--small-font);
 }
