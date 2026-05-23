@@ -1,36 +1,15 @@
-// import ProductData from "./ProductData.mjs";
-// import ProductList from "./ProductList.mjs";
+import ProductData from './ProductData.js';
+import ProductList from './ProductList.js';
+import { loadHeaderFooter, getParam } from './utils.mjs';
 
-// import { initCartBadge } from "./utils.mjs";
+loadHeaderFooter();
 
-// const dataSource = new ProductData("tents");
-
-// const element = document.querySelector(".product-list");
-
-// const productList = new ProductList("Tents", dataSource, element);
-
-
-
-// initCartBadge();
-// productList.init();
-
-import ProductData from "./ProductData.mjs";
-import ProductList from "./ProductList.mjs";
-
-import { initCartBadge } from "./utils.mjs";
-
-function getCategoryFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("category") || "tents";
-}
-
-const category = getCategoryFromURL();
-
-const dataSource = new ProductData(category);
-
-const element = document.querySelector(".product-list");
-
-const productList = new ProductList(category, dataSource, element);
-
-initCartBadge();
-productList.init();
+const category = getParam('category');
+// first create an instance of the ProductData class.
+const dataSource = new ProductData();
+// then get the element you want the product list to render in
+const listElement = document.querySelector('.product-list');
+// then create an instance of the ProductList class and send it the correct information.
+const myList = new ProductList(category, dataSource, listElement);
+// finally call the init method to show the products
+myList.init();
