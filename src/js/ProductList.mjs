@@ -6,7 +6,15 @@ function productCardTemplate(product) {
   const fullName = product.Name;
   const brand = product.Brand.Name;
   const image = product.Image.replace("../", "/");
+
   const price = product.FinalPrice || product.ListPrice;
+  const retailPrice = product.SuggestedRetailPrice;
+
+  const isDiscounted = price < retailPrice;
+
+  const discountPercent = Math.round(
+    ((retailPrice - price) / retailPrice) * 100,     
+  );
 
   return `
     <li class="product-card">
@@ -15,6 +23,11 @@ function productCardTemplate(product) {
           src="${image}"
           alt="${fullName}"
         />
+
+        ${isDiscounted 
+          ? `<p class="discount-badge">-${discountPercent}% OFF</p>` 
+          : ""}
+
         <h3 class="card__brand">${brand}</h3>
         <h2 class="card__name">${name}</h2>
         <p class="product-card__price">$${price.toFixed(2)}</p>
