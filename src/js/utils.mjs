@@ -28,13 +28,13 @@ export function getParam(param) {
   return urlParams.get(param);
 }
 
-export function renderWithTemplate(
-  templateFn,
-  parentElement,
-  list,
-  position = "afterbegin",
-  clear = false,
-) {
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if(callback) {
+    callback(data);
+  }
+}
+{
   if (clear) {
     parentElement.innerHTML = "";
   }
