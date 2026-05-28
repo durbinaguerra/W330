@@ -57,6 +57,7 @@ function removeItemFromCart(index) {
   cartItems.splice(index, 1);
   setLocalStorage("so-cart", cartItems);
   renderCartContents();
+  initCartBadge();
 }
 
 function handleRemoveFromCart(event) {

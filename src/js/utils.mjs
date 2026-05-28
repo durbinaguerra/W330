@@ -51,16 +51,21 @@ export function getParam(param) {
 // update cart badge count
 export function initCartBadge() {
   const cart = getLocalStorage("so-cart") || [];
+  const cartLink = qs(".cart a");
 
-  const badge = document.querySelector(".cart-count");
+  if (!cartLink) return;
 
-  if (!badge) return;
+  let badge = cartLink.querySelector(".cart-count, .cart__count");
 
-  badge.textContent = cart.length;
-
-  if (cart.length > 0) {
-    badge.classList.remove("hide");
-  } else {
-    badge.classList.add("hide");
+  if (!badge) {
+    badge = document.createElement("sup");
+    badge.className = "cart-count";
+    badge.setAttribute("aria-live", "polite");
+    badge.setAttribute("aria-atomic", "true");
+    cartLink.appendChild(badge);
   }
+
+  badge.classList.add("cart-count");
+  badge.textContent = cart.length;
+  badge.hidden = cart.length === 0;
 }
