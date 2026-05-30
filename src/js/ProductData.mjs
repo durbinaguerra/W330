@@ -9,7 +9,7 @@ function convertToJson(res) {
 }
 
 export default class ProductData {
-  constructor() {}
+  constructor() { }
 
   async getData(category) {
     const response = await fetch(
@@ -24,6 +24,16 @@ export default class ProductData {
       `${baseURL}product/${id}`
     );
     const data = await convertToJson(response);
+    return data.Result;
+  }
+
+  async searchProducts(query) {
+    const response = await fetch(
+      `${baseURL}products/search/${query}`
+    );
+
+    const data = await convertToJson(response);
+
     return data.Result;
   }
 }

@@ -6,15 +6,27 @@ loadHeaderFooter();
 
 const category = getParam("category");
 
+const search = getParam("search");
+if (search) {
+    document.querySelector(
+        "#category-title"
+    ).textContent = `Search Results: ${search}`;
+}
+else if (category) {
+    document.querySelector(
+        "#category-title"
+    ).textContent = `Top Products: ${category}`;
+}
+
 const dataSource = new ProductData();
 
 const listElement =
-  document.querySelector(".product-list");
+    document.querySelector(".product-list");
 
 const myList = new ProductList(
-  category,
-  dataSource,
-  listElement
+    category,
+    dataSource,
+    listElement
 );
 
 myList.init();

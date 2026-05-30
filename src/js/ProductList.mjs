@@ -26,10 +26,23 @@ export default class ProductList {
   }
 
   async init() {
-    const list =
-      await this.dataSource.getData(
+    let list;
+
+    if (this.category) {
+      list = await this.dataSource.getData(
         this.category
       );
+    } else {
+      const search =
+        new URLSearchParams(
+          window.location.search
+        ).get("search");
+
+      list =
+        await this.dataSource.searchProducts(
+          search
+        );
+    }
 
     this.renderList(list);
 
@@ -39,8 +52,18 @@ export default class ProductList {
       );
 
     if (title) {
-      title.textContent =
-        `Top Products: ${this.category}`;
+      if (this.category) {
+        title.textContent =
+          `Top Products: ${this.category}`;
+      } else {
+        const search =
+          new URLSearchParams(
+            window.location.search
+          ).get("search");
+
+        title.textContent =
+          `Search Results: ${search}`;
+      }
     }
   }
 
