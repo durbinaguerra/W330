@@ -1,0 +1,12 @@
+[
+  {
+    "message": "Free shipping this week!",
+    "background": "green",
+    "color": "white"
+  },
+  {
+    "message": "New tents have arrived!",
+    "background": "orange",
+    "color": "black"
+  }
+]
