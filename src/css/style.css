@@ -123,12 +123,36 @@ button {
   text-align: center;
 }
 
+.cart a {
+  display: inline-block;
+  position: relative;
+}
+
 .cart svg {
+  display: block;
   width: 25px;
 }
 
 .cart:hover svg {
   fill: gray;
+}
+
+.cart-count,
+.cart__count {
+  position: absolute;
+  top: -0.45rem;
+  right: -0.65rem;
+  min-width: 1.1rem;
+  padding: 0 0.2rem;
+  border-radius: 999px;
+  background-color: var(--primary-color);
+  color: white;
+  display: inline-flex;
+  font-size: 0.7rem;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.1rem;
 }
 
 /* End cart icon styles */
@@ -183,6 +207,24 @@ button {
   margin: 0.5em 0;
 }
 
+/* Discount and pricing helper styles */
+.discount-badge {
+  background: crimson;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.original-price {
+  text-decoration: line-through;
+  opacity: 0.7;
+  margin-top: -0.5rem;
+}
+
 .card__brand {
   font-size: var(--small-font);
 }
@@ -210,6 +252,9 @@ button {
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
+  gap: 0.25rem 0.75rem;
+  padding: 0.75rem 0;
+  position: relative;
 }
 
 .cart-card__image {
@@ -241,6 +286,42 @@ button {
   grid-column: 3;
 }
 
+.cart-card__remove {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--light-grey);
+  border-radius: 999px;
+  background: white;
+  color: var(--dark-grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.cart-card__remove:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.cart-card__remove:focus-visible {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+.cart-empty {
+  width: 100%;
+  padding: 1rem;
+  list-style: none;
+  text-align: center;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
@@ -261,7 +342,27 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
-/* added by DU for total in cart */
-.hide {
-  display: none;
+
+.alert-list p {
+  padding: 1rem;
+  margin: 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.product-grid li {
+  text-align: center;
+}
+
+.product-grid img {
+  width: 100%;
+  max-width: 250px;
 }
