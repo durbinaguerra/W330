@@ -15,7 +15,7 @@ function productCardTemplate(product) {
         </p>
       </a>
     </li>
-  `;
+    `;
 }
 
 export default class ProductList {
