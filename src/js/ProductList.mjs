@@ -1,36 +1,18 @@
 import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
-  const id = product.Id;
-  const name = product.NameWithoutBrand;
-  const fullName = product.Name;
-  const brand = product.Brand.Name;
-  const image = product.Image.replace("../", "/");
-
-  const price = product.FinalPrice || product.ListPrice;
-  const retailPrice = product.SuggestedRetailPrice;
-
-  const isDiscounted = price < retailPrice;
-
-  const discountPercent = Math.round(
-    ((retailPrice - price) / retailPrice) * 100     
-  );
-
   return `
     <li class="product-card">
-      <a href="product_pages/?product=${id}">
+      <a href="/product_pages/index.html?product=${product.Id}">
         <img
-          src="${image}"
-          alt="${fullName}"
+          src="${product.Images.PrimaryMedium}"
+          alt="${product.Name}"
         />
-
-        ${isDiscounted 
-          ? `<p class="discount-badge">-${discountPercent}% OFF</p>` 
-          : ""}
-
-        <h3 class="card__brand">${brand}</h3>
-        <h2 class="card__name">${name}</h2>
-        <p class="product-card__price">$${price.toFixed(2)}</p>
+        <h3>${product.Brand.Name}</h3>
+        <h2>${product.NameWithoutBrand}</h2>
+        <p class="product-card__price">
+          $${product.FinalPrice}
+        </p>
       </a>
     </li>
   `;
@@ -44,8 +26,45 @@ export default class ProductList {
   }
 
   async init() {
-    const list = await this.dataSource.getData();
+    let list;
+
+    if (this.category) {
+      list = await this.dataSource.getData(
+        this.category
+      );
+    } else {
+      const search =
+        new URLSearchParams(
+          window.location.search
+        ).get("search");
+
+      list =
+        await this.dataSource.searchProducts(
+          search
+        );
+    }
+
     this.renderList(list);
+
+    const title =
+      document.querySelector(
+        "#category-title"
+      );
+
+    if (title) {
+      if (this.category) {
+        title.textContent =
+          `Top Products: ${this.category}`;
+      } else {
+        const search =
+          new URLSearchParams(
+            window.location.search
+          ).get("search");
+
+        title.textContent =
+          `Search Results: ${search}`;
+      }
+    }
   }
 
   renderList(list) {
