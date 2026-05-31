@@ -1,6 +1,7 @@
 import {
   getLocalStorage,
   initCartBadge,
+  normalizeCartItems,
   renderListWithTemplate,
   setLocalStorage,
 } from "./utils.mjs";
@@ -11,7 +12,9 @@ function cartItemTemplate(item) {
     item.Images?.PrimarySmall ||
     item.Images?.PrimaryMedium ||
     item.Image;
+  const quantity = Number(item.quantity) || 1;
   const price = item.FinalPrice || item.ListPrice || 0;
+  const lineTotal = price * quantity;
 
   return `<li class="cart-card divider">
   <button
@@ -30,8 +33,8 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${color}</p>
-  <p class="cart-card__quantity">qty: 1</p>
-  <p class="cart-card__price">$${price.toFixed(2)}</p>
+  <p class="cart-card__quantity">qty: ${quantity}</p>
+  <p class="cart-card__price">$${lineTotal.toFixed(2)}</p>
 </li>`;
 }
 
@@ -53,7 +56,9 @@ export default class ShoppingCart {
   }
 
   getCartItems() {
-    return getLocalStorage(this.cartKey) || [];
+    const cartItems = normalizeCartItems(getLocalStorage(this.cartKey) || []);
+    setLocalStorage(this.cartKey, cartItems);
+    return cartItems;
   }
 
   renderCartContents() {
