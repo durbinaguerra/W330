@@ -1,54 +1,32 @@
-import Alert from "./Alert.js";
-import ExternalServices from "./ExternalServices.mjs";
+import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
-import { getParam, initCartBadge, loadHeaderFooter } from "./utils.mjs";
+import { loadHeaderFooter, getParam } from "./utils.mjs";
 
-const categoryLabels = {
-  tents: "Tents",
-  backpacks: "Backpacks",
-  "sleeping-bags": "Sleeping Bags",
-  hammocks: "Hammocks",
-};
+loadHeaderFooter();
 
-export async function renderProductListing(category = "tents") {
-  const listElement = document.querySelector(".product-list");
+const category = getParam("category");
 
-  if (!listElement) return;
-
-  const dataSource = new ExternalServices();
-  const productList = new ProductList(category, dataSource, listElement);
-  await productList.init();
+const search = getParam("search");
+if (search) {
+    document.querySelector(
+        "#category-title"
+    ).textContent = `Search Results: ${search}`;
+}
+else if (category) {
+    document.querySelector(
+        "#category-title"
+    ).textContent = `Top Products: ${category}`;
 }
 
-function updateCategoryPageContent(category) {
-  const label = categoryLabels[category] || "Products";
-  const heading = document.querySelector(".products h2");
-  const pageTitle = `Top Products: ${label}`;
+const dataSource = new ProductData();
 
-  if (heading) {
-    heading.textContent = pageTitle;
-  }
+const listElement =
+    document.querySelector(".product-list");
 
-  document.title = `Sleep Outside | ${pageTitle}`;
-}
-
-export async function initProductListingPage(defaultCategory = "tents") {
-  const category = getParam("category") || defaultCategory;
-
-  await loadHeaderFooter();
-  initCartBadge();
-  updateCategoryPageContent(category);
-  await renderProductListing(category);
-
-  const alert = new Alert();
-  await alert.init();
-}
-
-const isDirectProductListingEntry = document.querySelector(
-  "script[type='module'][src$='product-listing.js']"
+const myList = new ProductList(
+    category,
+    dataSource,
+    listElement
 );
 
-if (isDirectProductListingEntry) {
-  const category = getParam("category") || "tents";
-  initProductListingPage(category);
-}
+myList.init();

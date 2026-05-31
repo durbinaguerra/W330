@@ -1,14 +1,7 @@
+import { loadHeaderFooter } from "./utils.mjs";
 import Alert from "./Alert.js";
-import { renderProductListing } from "./product-listing.js";
-import { initCartBadge, loadHeaderFooter } from "./utils.mjs";
 
-async function init() {
-  await loadHeaderFooter();
-  initCartBadge();
-  await renderProductListing("tents");
+loadHeaderFooter();
 
-  const alert = new Alert();
-  await alert.init();
-}
-
-init();
+const alert = new Alert();
+alert.init();

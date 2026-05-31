@@ -559,3 +559,20 @@ footer {
   text-align: center;
   font-weight: bold;
 }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+
+.product-grid li {
+  text-align: center;
+}
+
+.product-grid img {
+  width: 100%;
+  max-width: 250px;
+}
