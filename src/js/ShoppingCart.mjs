@@ -46,6 +46,8 @@ export default class ShoppingCart {
   constructor(listElement, cartKey = "so-cart") {
     this.listElement = listElement;
     this.cartKey = cartKey;
+    this.summaryElement = document.querySelector(".cart-summary");
+    this.totalElement = document.querySelector(".cart-total");
   }
 
   init() {
@@ -66,6 +68,7 @@ export default class ShoppingCart {
 
     if (cartItems.length === 0) {
       this.listElement.innerHTML = emptyCartTemplate();
+      this.renderCartTotal(cartItems);
       return;
     }
 
@@ -81,6 +84,28 @@ export default class ShoppingCart {
       "afterbegin",
       true,
     );
+    this.renderCartTotal(cartItems);
+  }
+
+  renderCartTotal(cartItems) {
+    if (!this.totalElement || !this.summaryElement) return;
+
+    if (!cartItems.length) {
+      this.summaryElement.hidden = true;
+      this.totalElement.hidden = true;
+      this.totalElement.textContent = "";
+      return;
+    }
+
+    const total = cartItems.reduce((sum, item) => {
+      const quantity = Number(item.quantity) || 1;
+      const price = item.FinalPrice || item.ListPrice || 0;
+      return sum + price * quantity;
+    }, 0);
+
+    this.totalElement.textContent = `Total: $${total.toFixed(2)}`;
+    this.summaryElement.hidden = false;
+    this.totalElement.hidden = false;
   }
 
   removeItem(index) {

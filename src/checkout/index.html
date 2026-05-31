@@ -17,8 +17,156 @@
     <div id="main-header"></div>
 
     <main class="divider">
-      <section class="products">
-        <h2>Review & Place your Order</h2>
+      <section class="checkout-page">
+        <div class="checkout-layout">
+          <form class="checkout-form" id="checkout-form" novalidate>
+            <h2>Review &amp; Place Your Order</h2>
+
+            <fieldset class="checkout-fieldset">
+              <legend>Customer Name</legend>
+              <div class="form-grid form-grid--two">
+                <label class="form-field" for="fname">
+                  <span>First Name</span>
+                  <input
+                    id="fname"
+                    name="fname"
+                    type="text"
+                    autocomplete="given-name"
+                    required
+                  />
+                </label>
+                <label class="form-field" for="lname">
+                  <span>Last Name</span>
+                  <input
+                    id="lname"
+                    name="lname"
+                    type="text"
+                    autocomplete="family-name"
+                    required
+                  />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="checkout-fieldset">
+              <legend>Address</legend>
+              <div class="form-grid">
+                <label class="form-field" for="street">
+                  <span>Street Address</span>
+                  <input
+                    id="street"
+                    name="street"
+                    type="text"
+                    autocomplete="street-address"
+                    required
+                  />
+                </label>
+                <div class="form-grid form-grid--three">
+                  <label class="form-field" for="city">
+                    <span>City</span>
+                    <input
+                      id="city"
+                      name="city"
+                      type="text"
+                      autocomplete="address-level2"
+                      required
+                    />
+                  </label>
+                  <label class="form-field" for="state">
+                    <span>State</span>
+                    <input
+                      id="state"
+                      name="state"
+                      type="text"
+                      autocomplete="address-level1"
+                      required
+                    />
+                  </label>
+                  <label class="form-field" for="zip">
+                    <span>Zip Code</span>
+                    <input
+                      id="zip"
+                      name="zip"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="postal-code"
+                      required
+                    />
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="checkout-fieldset">
+              <legend>Payment</legend>
+              <div class="form-grid">
+                <label class="form-field" for="cardNumber">
+                  <span>Credit Card Number</span>
+                  <input
+                    id="cardNumber"
+                    name="cardNumber"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="cc-number"
+                    required
+                  />
+                </label>
+                <div class="form-grid form-grid--two">
+                  <label class="form-field" for="expiration">
+                    <span>Expiration Date</span>
+                    <input
+                      id="expiration"
+                      name="expiration"
+                      type="month"
+                      autocomplete="cc-exp"
+                      required
+                    />
+                  </label>
+                  <label class="form-field" for="code">
+                    <span>Security Code</span>
+                    <input
+                      id="code"
+                      name="code"
+                      type="text"
+                      inputmode="numeric"
+                      autocomplete="cc-csc"
+                      maxlength="4"
+                      required
+                    />
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+
+            <p class="checkout-feedback" aria-live="polite"></p>
+            <button class="checkout-submit" type="submit">Checkout</button>
+          </form>
+
+          <aside class="order-summary" aria-labelledby="order-summary-title">
+            <h3 id="order-summary-title">Order Summary</h3>
+            <dl class="order-summary__details">
+              <div class="order-summary__row">
+                <dt id="subtotalLabel">Subtotal</dt>
+                <dd id="subtotal" class="checkout-subtotal">$0.00</dd>
+              </div>
+              <div class="order-summary__row">
+                <dt>Tax</dt>
+                <dd id="tax" class="checkout-tax">$0.00</dd>
+              </div>
+              <div class="order-summary__row">
+                <dt>Shipping Estimate</dt>
+                <dd id="shipping" class="checkout-shipping">$0.00</dd>
+              </div>
+              <div class="order-summary__row order-summary__row--total">
+                <dt>Order Total</dt>
+                <dd id="orderTotal" class="checkout-total">$0.00</dd>
+              </div>
+            </dl>
+            <p class="order-summary__empty" hidden>
+              Your cart is empty. Add an item before checking out.
+            </p>
+          </aside>
+        </div>
       </section>
     </main>
 

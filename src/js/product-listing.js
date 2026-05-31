@@ -1,5 +1,5 @@
 import Alert from "./Alert.js";
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import { getParam, initCartBadge, loadHeaderFooter } from "./utils.mjs";
 
@@ -15,7 +15,7 @@ export async function renderProductListing(category = "tents") {
 
   if (!listElement) return;
 
-  const dataSource = new ProductData();
+  const dataSource = new ExternalServices();
   const productList = new ProductList(category, dataSource, listElement);
   await productList.init();
 }
