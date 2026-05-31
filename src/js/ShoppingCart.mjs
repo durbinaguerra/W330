@@ -7,6 +7,10 @@ import {
 
 function cartItemTemplate(item) {
   const color = item.Colors?.[0]?.ColorName || "N/A";
+  const image =
+    item.Images?.PrimarySmall ||
+    item.Images?.PrimaryMedium ||
+    item.Image;
   const price = item.FinalPrice || item.ListPrice || 0;
 
   return `<li class="cart-card divider">
@@ -20,10 +24,7 @@ function cartItemTemplate(item) {
     &times;
   </button>
   <a href="#" class="cart-card__image">
-    <img
-      src="${item.Image}"
-      alt="${item.Name}"
-    />
+    <img src="${image}" alt="${item.Name}" />
   </a>
   <a href="#">
     <h2 class="card__name">${item.Name}</h2>

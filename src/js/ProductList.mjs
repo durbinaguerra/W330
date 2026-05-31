@@ -5,7 +5,11 @@ function productCardTemplate(product) {
   const name = product.NameWithoutBrand;
   const fullName = product.Name;
   const brand = product.Brand.Name;
-  const image = product.Image.replace("../", "/");
+  const image =
+    product.Images?.PrimaryMedium ||
+    product.Images?.PrimaryLarge ||
+    product.Image;
+  const category = product.category || "tents";
 
   const price = product.FinalPrice || product.ListPrice;
   const retailPrice = product.SuggestedRetailPrice;
@@ -18,11 +22,8 @@ function productCardTemplate(product) {
 
   return `
     <li class="product-card">
-      <a href="product_pages/?product=${id}">
-        <img
-          src="${image}"
-          alt="${fullName}"
-        />
+      <a href="/product_pages/index.html?category=${category}&product=${id}">
+        <img src="${image}" alt="${fullName}" />
 
         ${isDiscounted 
           ? `<p class="discount-badge">-${discountPercent}% OFF</p>` 
@@ -44,15 +45,26 @@ export default class ProductList {
   }
 
   async init() {
-    const list = await this.dataSource.getData();
+    const list = await this.dataSource.getData(this.category);
     this.renderList(list);
   }
 
   renderList(list) {
+    if (!list.length) {
+      this.listElement.innerHTML =
+        "<li class='product-list__empty'>No products found.</li>";
+      return;
+    }
+
+    const categorizedList = list.map((product) => ({
+      ...product,
+      category: this.category,
+    }));
+
     renderListWithTemplate(
       productCardTemplate,
       this.listElement,
-      list,
+      categorizedList,
       "afterbegin",
       true
     );

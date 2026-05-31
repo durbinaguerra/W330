@@ -175,6 +175,49 @@ button {
   text-align: center;
 }
 
+.categories {
+  padding: 3.5rem 1rem 1rem;
+  text-align: center;
+}
+
+.categories h2 {
+  margin-bottom: 1.25rem;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(110px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+.category-card {
+  width: 100%;
+  max-width: 170px;
+  padding: 1rem 0.75rem;
+  color: var(--dark-grey);
+  text-decoration: none;
+  border-radius: 12px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.category-card:hover {
+  background-color: #f7f3ee;
+  transform: translateY(-2px);
+}
+
+.category-card img {
+  width: 58px;
+  height: 58px;
+  margin-bottom: 0.5rem;
+}
+
+.category-card span {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
 .products {
   margin-top: 2rem;
   padding: 1rem;
@@ -190,6 +233,13 @@ button {
 .product-list a {
   text-decoration: none;
   color: var(--dark-grey);
+}
+
+.product-list__empty {
+  width: 100%;
+  padding: 1rem;
+  list-style: none;
+  text-align: center;
 }
 
 /* Styles for product lists */
@@ -330,6 +380,12 @@ button {
 
   .mission {
     font-size: 1.2em;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    max-width: 760px;
+    margin: 0 auto;
   }
 
   .cart-card {

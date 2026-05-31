@@ -36,6 +36,10 @@ export default class ProductDetails {
 
   renderProductDetails() {
     const color = this.product.Colors[0]?.ColorName || "";
+    const image =
+      this.product.Images?.PrimaryLarge ||
+      this.product.Images?.PrimaryMedium ||
+      this.product.Image;
     const price = this.product.FinalPrice || this.product.ListPrice;
     const retailPrice = this.product.SuggestedRetailPrice;
     const isDiscounted = price < retailPrice;
@@ -48,7 +52,7 @@ export default class ProductDetails {
       <h2 class="divider">${this.product.NameWithoutBrand}</h2>
       <img
         class="divider"
-        src="${this.product.Image}"
+        src="${image}"
         alt="${this.product.NameWithoutBrand}"
       />
       ${isDiscounted
