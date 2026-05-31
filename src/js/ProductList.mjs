@@ -68,10 +68,21 @@ export default class ProductList {
   }
 
   renderList(list) {
+    if (!list.length) {
+      this.listElement.innerHTML =
+        "<li class='product-list__empty'>No products found.</li>";
+      return;
+    }
+
+    const categorizedList = list.map((product) => ({
+      ...product,
+      category: this.category,
+    }));
+
     renderListWithTemplate(
       productCardTemplate,
       this.listElement,
-      list,
+      categorizedList,
       "afterbegin",
       true
     );
