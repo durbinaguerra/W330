@@ -80,10 +80,37 @@ export function getParam(param) {
   return searchParams.get(param);
 }
 
+export function normalizeCartItems(cartItems = []) {
+  const mergedItems = new Map();
+
+  cartItems.forEach((item) => {
+    if (!item?.Id) return;
+
+    const quantity = Number(item.quantity) > 0 ? Number(item.quantity) : 1;
+    const existingItem = mergedItems.get(item.Id);
+
+    if (existingItem) {
+      existingItem.quantity += quantity;
+      return;
+    }
+
+    mergedItems.set(item.Id, {
+      ...item,
+      quantity,
+    });
+  });
+
+  return [...mergedItems.values()];
+}
+
 // update cart badge count
 export function initCartBadge() {
-  const cart = getLocalStorage("so-cart") || [];
+  const cart = normalizeCartItems(getLocalStorage("so-cart") || []);
   const cartLink = qs(".cart a");
+  const totalItems = cart.reduce(
+    (sum, item) => sum + (Number(item.quantity) || 1),
+    0
+  );
 
   if (!cartLink) return;
 
@@ -98,6 +125,6 @@ export function initCartBadge() {
   }
 
   badge.classList.add("cart-count");
-  badge.textContent = cart.length;
-  badge.hidden = cart.length === 0;
+  badge.textContent = totalItems;
+  badge.hidden = totalItems === 0;
 }

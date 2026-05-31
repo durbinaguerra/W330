@@ -1,4 +1,10 @@
-import { getLocalStorage, initCartBadge, qs, setLocalStorage } from "./utils.mjs";
+import {
+  getLocalStorage,
+  initCartBadge,
+  normalizeCartItems,
+  qs,
+  setLocalStorage,
+} from "./utils.mjs";
 
 export default class ProductDetails {
   constructor(productId, dataSource) {
@@ -28,8 +34,18 @@ export default class ProductDetails {
   }
 
   addProductToCart() {
-    const cart = getLocalStorage("so-cart") || [];
-    cart.push(this.product);
+    const cart = normalizeCartItems(getLocalStorage("so-cart") || []);
+    const existingItem = cart.find((item) => item.Id === this.product.Id);
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        ...this.product,
+        quantity: 1,
+      });
+    }
+
     setLocalStorage("so-cart", cart);
     initCartBadge();
   }
