@@ -47,21 +47,26 @@ export default class ProductList {
   async init() {
     let list;
 
-    if (this.category) {
-      list = await this.dataSource.getData(
-        this.category
-      );
-    } else {
-      const search =
-        new URLSearchParams(
-          window.location.search
-        ).get("search");
+    try {
+      if (this.category) {
+        list = await this.dataSource.getData(
+          this.category
+        );
+      } else {
+        const search =
+          new URLSearchParams(
+            window.location.search
+          ).get("search");
 
-      list = search
-        ? await this.dataSource.searchProducts(
-            search
-          )
-        : [];
+        list = search
+          ? await this.dataSource.searchProducts(
+              search
+            )
+          : [];
+      }
+    } catch (error) {
+      this.renderError();
+      return;
     }
 
     this.products = list;
@@ -119,14 +124,21 @@ export default class ProductList {
     );
   }
 
+  renderError() {
+    if (!this.listElement) return;
+
+    this.listElement.innerHTML =
+      "<li class='product-list__empty'>Products could not be loaded. Please try again later.</li>";
+  }
+
   sortProducts(event) {
     const sortBy = event.target.value;
     let sortedProducts = [...this.products];
 
     if (sortBy === "name") {
       sortedProducts.sort((a, b) =>
-        a.NameWithoutBrand.localeCompare(
-          b.NameWithoutBrand
+        (a.NameWithoutBrand || a.Name || "").localeCompare(
+          b.NameWithoutBrand || b.Name || ""
         )
       );
     }
@@ -134,7 +146,7 @@ export default class ProductList {
     if (sortBy === "price") {
       sortedProducts.sort(
         (a, b) =>
-          a.FinalPrice - b.FinalPrice
+          getProductPrice(a) - getProductPrice(b)
       );
     }
 

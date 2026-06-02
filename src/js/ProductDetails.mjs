@@ -24,8 +24,14 @@ export default class ProductDetails {
 
     if (!this.productId || !this.productContainer) return;
 
-    // The product details are needed before the HTML can be rendered.
-    this.product = await this.dataSource.findProductById(this.productId);
+    try {
+      // The product details are needed before the HTML can be rendered.
+      this.product = await this.dataSource.findProductById(this.productId);
+    } catch (error) {
+      this.productContainer.innerHTML =
+        "<p>Product details could not be loaded. Please try again later.</p>";
+      return;
+    }
 
     if (!this.product) {
       this.productContainer.innerHTML = "<p>Product not found.</p>";
@@ -35,7 +41,7 @@ export default class ProductDetails {
     this.renderProductDetails();
     document
       .getElementById("addToCart")
-      .addEventListener("click", this.addProductToCart.bind(this));
+      ?.addEventListener("click", this.addProductToCart.bind(this));
   }
 
   addProductToCart() {

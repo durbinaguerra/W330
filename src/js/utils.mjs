@@ -5,7 +5,12 @@ export function qs(selector, parent = document) {
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  try {
+    return JSON.parse(localStorage.getItem(key));
+  } catch {
+    localStorage.removeItem(key);
+    return null;
+  }
 }
 
 // save data to local storage
@@ -15,11 +20,15 @@ export function setLocalStorage(key, data) {
 
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
+  const element = qs(selector);
+
+  if (!element) return;
+
+  element.addEventListener("touchend", (event) => {
     event.preventDefault();
     callback();
   });
-  qs(selector).addEventListener("click", callback);
+  element.addEventListener("click", callback);
 }
 
 
@@ -30,6 +39,7 @@ export function renderListWithTemplate(
   position = "afterbegin",
   clear = false
 ) {
+  if (!parentElement) return;
 
   if (clear) {
     parentElement.innerHTML = "";
