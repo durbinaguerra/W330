@@ -53,6 +53,40 @@ export function renderWithTemplate(
     callback(data);
   }
 }
+
+export function getProductImage(product, size = "medium") {
+  const images = product?.Images || {};
+  const image =
+    size === "small"
+      ? images.PrimarySmall || images.PrimaryMedium || images.PrimaryLarge
+      : size === "large"
+        ? images.PrimaryLarge || images.PrimaryMedium || images.PrimarySmall
+        : images.PrimaryMedium || images.PrimaryLarge || images.PrimarySmall;
+
+  return (image || product?.Image || "").replace(/^\.\.\//, "/");
+}
+
+export function getProductPrice(product) {
+  return Number(product?.FinalPrice ?? product?.ListPrice ?? 0);
+}
+
+export function getProductRetailPrice(product) {
+  return Number(product?.SuggestedRetailPrice ?? product?.ListPrice ?? 0);
+}
+
+export function formatCurrency(amount) {
+  return `$${Number(amount || 0).toFixed(2)}`;
+}
+
+export function getProductDiscountPercent(product) {
+  const price = getProductPrice(product);
+  const retailPrice = getProductRetailPrice(product);
+
+  if (!retailPrice || price >= retailPrice) return 0;
+
+  return Math.round(((retailPrice - price) / retailPrice) * 100);
+}
+
 export async function loadTemplate(path) {
   const res = await fetch(path);
   const template = await res.text();
