@@ -201,7 +201,9 @@ button,
   color: var(--dark-grey);
   text-decoration: none;
   border-radius: 12px;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .category-card:hover {
@@ -234,6 +236,7 @@ button,
 }
 
 .product-list a {
+  display: block;
   text-decoration: none;
   color: var(--dark-grey);
 }
@@ -252,12 +255,24 @@ button,
   padding: 0.5em;
   border: 1px solid var(--light-grey);
   max-width: 250px;
+  position: relative;
 }
 
 .product-card h2,
 .product-card h3,
 .product-card p {
   margin: 0.5em 0;
+}
+
+.product-card img {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+}
+
+.product-card__price {
+  font-weight: 700;
 }
 
 /* Discount and pricing helper styles */
@@ -272,10 +287,22 @@ button,
   margin-bottom: 0.5rem;
 }
 
+.product-card .discount-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  margin: 0;
+}
+
 .original-price {
   text-decoration: line-through;
   opacity: 0.7;
   margin-top: -0.5rem;
+}
+
+.product-card .original-price {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .card__brand {

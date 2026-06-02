@@ -4,8 +4,15 @@ export default class Alert {
   }
 
   async getAlerts() {
-    const response = await fetch(this.path);
-    return await response.json();
+    try {
+      const response = await fetch(this.path);
+
+      if (!response.ok) return [];
+
+      return await response.json();
+    } catch {
+      return [];
+    }
   }
 
   async init() {

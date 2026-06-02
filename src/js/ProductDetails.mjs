@@ -1,5 +1,10 @@
 import {
   getLocalStorage,
+  formatCurrency,
+  getProductDiscountPercent,
+  getProductImage,
+  getProductPrice,
+  getProductRetailPrice,
   initCartBadge,
   normalizeCartItems,
   qs,
@@ -19,8 +24,14 @@ export default class ProductDetails {
 
     if (!this.productId || !this.productContainer) return;
 
-    // The product details are needed before the HTML can be rendered.
-    this.product = await this.dataSource.findProductById(this.productId);
+    try {
+      // The product details are needed before the HTML can be rendered.
+      this.product = await this.dataSource.findProductById(this.productId);
+    } catch (error) {
+      this.productContainer.innerHTML =
+        "<p>Product details could not be loaded. Please try again later.</p>";
+      return;
+    }
 
     if (!this.product) {
       this.productContainer.innerHTML = "<p>Product not found.</p>";
@@ -30,7 +41,7 @@ export default class ProductDetails {
     this.renderProductDetails();
     document
       .getElementById("addToCart")
-      .addEventListener("click", this.addProductToCart.bind(this));
+      ?.addEventListener("click", this.addProductToCart.bind(this));
   }
 
   addProductToCart() {
@@ -51,36 +62,32 @@ export default class ProductDetails {
   }
 
   renderProductDetails() {
-    const color = this.product.Colors[0]?.ColorName || "";
-    const image =
-      this.product.Images?.PrimaryLarge ||
-      this.product.Images?.PrimaryMedium ||
-      this.product.Image;
-    const price = this.product.FinalPrice || this.product.ListPrice;
-    const retailPrice = this.product.SuggestedRetailPrice;
-    const isDiscounted = price < retailPrice;
-    const discountPercent = Math.round(
-      ((retailPrice - price) / retailPrice) * 100     
-    );
+    const brand = this.product.Brand?.Name || "";
+    const color = this.product.Colors?.[0]?.ColorName || "";
+    const image = getProductImage(this.product, "large");
+    const price = getProductPrice(this.product);
+    const retailPrice = getProductRetailPrice(this.product);
+    const discountPercent = getProductDiscountPercent(this.product);
+    const isDiscounted = discountPercent > 0;
 
     this.productContainer.innerHTML = `
-      <h3>${this.product.Brand.Name}</h3>
+      <h3>${brand}</h3>
       <h2 class="divider">${this.product.NameWithoutBrand}</h2>
       <img
         class="divider"
-        src="${this.product.Images.PrimaryLarge}"
+        src="${image}"
         alt="${this.product.NameWithoutBrand}"
       />
       ${isDiscounted
         ? `<p class="discount-badge">-${discountPercent}% OFF</p>`
         : ""}
 
-      <p class="product-card__price">$${price.toFixed(2)}</p>  
+      <p class="product-card__price">${formatCurrency(price)}</p>  
       ${isDiscounted 
-        ? `<p class="original-price">$${retailPrice.toFixed(2)}</p>` 
+        ? `<p class="original-price">${formatCurrency(retailPrice)}</p>` 
         : ""}    
       <p class="product__color">${color}</p>
-      <p class="product__description">${this.product.DescriptionHtmlSimple}</p>
+      <p class="product__description">${this.product.DescriptionHtmlSimple || ""}</p>
       <div class="product-detail__add">
         <button id="addToCart" data-id="${this.product.Id}">Add to Cart</button>
       </div>
