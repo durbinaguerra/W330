@@ -201,7 +201,9 @@ button,
   color: var(--dark-grey);
   text-decoration: none;
   border-radius: 12px;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .category-card:hover {
