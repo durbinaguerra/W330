@@ -603,3 +603,34 @@ footer {
   width: 100%;
   max-width: 250px;
 }
+
+.newsletter {
+  margin: 3rem auto;
+  max-width: 600px;
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.newsletter form {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.newsletter input {
+  padding: 0.75rem;
+  min-width: 250px;
+}
+
+.newsletter button {
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+}
+
+#newsletter-message {
+  margin-top: 1rem;
+  font-weight: bold;
+}
