@@ -1,11 +1,21 @@
 const baseURL = import.meta.env.VITE_SERVER_URL;
 
-function convertToJson(res) {
+async function convertToJson(res) {
+  const contentType = res.headers.get("content-type") || "";
+  const isJsonResponse = contentType.includes("application/json");
+  const payload = isJsonResponse ? await res.json() : await res.text();
+
   if (res.ok) {
-    return res.json();
-  } else {
-    throw new Error("Bad Response");
+    return payload;
   }
+
+  const message =
+    payload?.message ||
+    payload?.error ||
+    (typeof payload === "string" && payload) ||
+    "Bad Response";
+
+  throw new Error(message);
 }
 
 export default class ExternalServices {
@@ -31,6 +41,19 @@ export default class ExternalServices {
     };
 
     const response = await fetch(`${baseURL}checkout/`, options);
+    return convertToJson(response);
+  }
+
+  async createUser(payload) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    };
+
+    const response = await fetch(`${baseURL}users`, options);
     return convertToJson(response);
   }
 }

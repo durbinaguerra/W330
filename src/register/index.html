@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sleep Outside | Register</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/register.js" type="module"></script>
+  </head>
+
+  <body>
+    <div id="main-header"></div>
+
+    <main class="divider">
+      <section class="register-page">
+        <div class="register-intro">
+          <p class="register-eyebrow">Create Your Login</p>
+          <h1>Create your SleepOutside account and enter our giveaway.</h1>
+          <p class="register-copy">
+            Sign up with your email login to save your shipping details, speed
+            up future orders, and get one automatic entry into our Trailhead
+            Giveaway.
+          </p>
+        </div>
+
+        <div class="register-layout">
+          <section class="register-benefits" aria-labelledby="member-perks">
+            <h2 id="member-perks">Why register?</h2>
+            <ul class="register-list">
+              <li>Create a customer login using your email and password.</li>
+              <li>Save your shipping details for a faster checkout.</li>
+              <li>
+                Be the first to hear about seasonal deals and new arrivals.
+              </li>
+            </ul>
+
+            <div class="register-giveaway">
+              <h3>Trailhead Giveaway Details</h3>
+              <p>
+                New members are automatically entered to win a $250 gear bundle,
+                a rechargeable lantern, and free shipping on their next order.
+              </p>
+              <p>
+                One entry per customer. Winner notifications are sent by email.
+              </p>
+            </div>
+          </section>
+
+          <form
+            class="checkout-form register-form"
+            id="register-form"
+            novalidate
+          >
+            <h2>Create Your Account</h2>
+
+            <fieldset class="checkout-fieldset">
+              <legend>About You</legend>
+              <div class="form-grid form-grid--two">
+                <label class="form-field" for="register-fname">
+                  <span>First Name</span>
+                  <input
+                    id="register-fname"
+                    name="fname"
+                    type="text"
+                    autocomplete="given-name"
+                    required
+                  />
+                </label>
+                <label class="form-field" for="register-lname">
+                  <span>Last Name</span>
+                  <input
+                    id="register-lname"
+                    name="lname"
+                    type="text"
+                    autocomplete="family-name"
+                    required
+                  />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="checkout-fieldset">
+              <legend>Login Details</legend>
+              <div class="form-grid">
+                <label class="form-field" for="register-email">
+                  <span>Email Address</span>
+                  <input
+                    id="register-email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    required
+                  />
+                </label>
+                <p class="register-field-hint">
+                  Your email address will be used as your login.
+                </p>
+              </div>
+              <div class="form-grid form-grid--two">
+                <label class="form-field" for="register-password">
+                  <span>Password</span>
+                  <input
+                    id="register-password"
+                    name="password"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                  />
+                </label>
+                <label class="form-field" for="register-confirm-password">
+                  <span>Confirm Password</span>
+                  <input
+                    id="register-confirm-password"
+                    name="confirmPassword"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                  />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="checkout-fieldset">
+              <legend>Shipping Address</legend>
+              <div class="form-grid">
+                <label class="form-field" for="register-street">
+                  <span>Street Address</span>
+                  <input
+                    id="register-street"
+                    name="street"
+                    type="text"
+                    autocomplete="address-line1"
+                    required
+                  />
+                </label>
+                <label class="form-field" for="register-street2">
+                  <span>Apartment, Suite, etc. <small>(optional)</small></span>
+                  <input
+                    id="register-street2"
+                    name="street2"
+                    type="text"
+                    autocomplete="address-line2"
+                  />
+                </label>
+              </div>
+              <div class="form-grid form-grid--three">
+                <label class="form-field" for="register-city">
+                  <span>City</span>
+                  <input
+                    id="register-city"
+                    name="city"
+                    type="text"
+                    autocomplete="address-level2"
+                    required
+                  />
+                </label>
+                <label class="form-field" for="register-state">
+                  <span>State</span>
+                  <input
+                    id="register-state"
+                    name="state"
+                    type="text"
+                    autocomplete="address-level1"
+                    required
+                  />
+                </label>
+                <label class="form-field" for="register-zip">
+                  <span>Zip Code</span>
+                  <input
+                    id="register-zip"
+                    name="zip"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="postal-code"
+                    required
+                  />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset class="checkout-fieldset">
+              <legend>Avatar</legend>
+              <div class="register-avatar-field">
+                <label class="form-field" for="register-avatar">
+                  <span>Avatar Image URL <small>(optional)</small></span>
+                  <input
+                    id="register-avatar"
+                    name="avatar"
+                    type="url"
+                    inputmode="url"
+                    autocomplete="url"
+                    placeholder="https://example.com/avatar.jpg"
+                  />
+                </label>
+                <div class="register-avatar-preview" aria-live="polite">
+                  <img class="register-avatar-preview__image" alt="" hidden />
+                  <span class="register-avatar-preview__initials">SO</span>
+                </div>
+              </div>
+              <p class="register-field-hint">
+                Add an image URL for your profile photo, or leave it blank and
+                we will use your initials.
+              </p>
+            </fieldset>
+
+            <p
+              class="register-feedback checkout-feedback"
+              aria-live="polite"
+            ></p>
+            <button class="checkout-submit" type="submit">
+              Create Account
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <div id="main-footer"></div>
+  </body>
+</html>

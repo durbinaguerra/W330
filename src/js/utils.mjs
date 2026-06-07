@@ -66,6 +66,7 @@ export async function loadHeaderFooter() {
   if (headerElement) {
     const headerTemplate = await loadTemplate("/partials/header.html");
     renderWithTemplate(headerTemplate, headerElement);
+    initUserAvatar(headerElement);
   }
 
   if (footerElement) {
@@ -127,4 +128,63 @@ export function initCartBadge() {
   badge.classList.add("cart-count");
   badge.textContent = totalItems;
   badge.hidden = totalItems === 0;
+}
+
+function getUserInitials(profile = {}) {
+  const firstName = profile.fname || profile.firstName || "";
+  const lastName = profile.lname || profile.lastName || "";
+  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`
+    .trim()
+    .toUpperCase();
+
+  return initials || "SO";
+}
+
+export function initUserAvatar(parent = document) {
+  const headerActions =
+    qs(".header-actions", parent) || qs("#main-header .header-actions");
+
+  if (!headerActions) return;
+
+  qs(".user-avatar", headerActions)?.remove();
+
+  const profile = getLocalStorage("so-user-registration");
+
+  if (!profile) return;
+
+  const avatarLink = document.createElement("a");
+  const avatarImage = document.createElement("img");
+  const avatarInitials = document.createElement("span");
+
+  avatarLink.className = "user-avatar";
+  avatarLink.href = "/register/index.html";
+  avatarLink.setAttribute(
+    "aria-label",
+    `Open account for ${profile.fname || profile.firstName || "SleepOutside customer"}`,
+  );
+
+  avatarImage.className = "user-avatar__image";
+  avatarImage.alt = "";
+  avatarImage.hidden = true;
+
+  avatarInitials.className = "user-avatar__initials";
+  avatarInitials.textContent = getUserInitials(profile);
+
+  avatarImage.addEventListener("load", () => {
+    avatarImage.hidden = false;
+    avatarLink.classList.add("user-avatar--image");
+  });
+
+  avatarImage.addEventListener("error", () => {
+    avatarImage.hidden = true;
+    avatarImage.removeAttribute("src");
+    avatarLink.classList.remove("user-avatar--image");
+  });
+
+  if (profile.avatar) {
+    avatarImage.src = profile.avatar;
+  }
+
+  avatarLink.append(avatarImage, avatarInitials);
+  headerActions.append(avatarLink);
 }
