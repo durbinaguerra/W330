@@ -12,12 +12,18 @@ async function convertToJson(res) {
 
   if (res.ok) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     return payload;
 =======
     return res.json();
   } else {
     throw new Error(`Bad Response: ${res.status}`);
 >>>>>>> 0b7b95573d0faa73c51ce29f04d99aaeaaece891
+=======
+    return res.json();
+  } else {
+    throw new Error(`Bad Response: ${res.status}`);
+>>>>>>> b8952f0aee4b4e6d33513ffde23a9adf32c868a1
   }
 
   const message =
