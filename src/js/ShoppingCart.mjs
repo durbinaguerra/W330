@@ -1,5 +1,7 @@
 import {
   getLocalStorage,
+  getProductImage,
+  getProductPrice,
   initCartBadge,
   normalizeCartItems,
   renderListWithTemplate,
@@ -8,12 +10,9 @@ import {
 
 function cartItemTemplate(item) {
   const color = item.Colors?.[0]?.ColorName || "N/A";
-  const image =
-    item.Images?.PrimarySmall ||
-    item.Images?.PrimaryMedium ||
-    item.Image;
+  const image = getProductImage(item, "small");
   const quantity = Number(item.quantity) || 1;
-  const price = item.FinalPrice || item.ListPrice || 0;
+  const price = getProductPrice(item);
   const lineTotal = price * quantity;
 
   return `<li class="cart-card divider">
@@ -99,7 +98,7 @@ export default class ShoppingCart {
 
     const total = cartItems.reduce((sum, item) => {
       const quantity = Number(item.quantity) || 1;
-      const price = item.FinalPrice || item.ListPrice || 0;
+      const price = getProductPrice(item);
       return sum + price * quantity;
     }, 0);
 

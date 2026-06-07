@@ -1,5 +1,7 @@
 import {
+  getProductPrice,
   getLocalStorage,
+  initCartBadge,
   normalizeCartItems,
   setLocalStorage,
 } from "./utils.mjs";
@@ -14,10 +16,6 @@ function formatCurrency(amount) {
     style: "currency",
     currency: "USD",
   }).format(amount);
-}
-
-function getItemPrice(item) {
-  return Number(item?.FinalPrice || item?.ListPrice || 0);
 }
 
 function formatExpirationValue(value) {
@@ -87,7 +85,7 @@ export default class CheckoutProcess {
     this.list = this.getCartItems();
     this.itemTotal = this.list.reduce((sum, item) => {
       const quantity = Number(item.quantity) || 1;
-      return sum + getItemPrice(item) * quantity;
+      return sum + getProductPrice(item) * quantity;
     }, 0);
     this.itemCount = this.list.reduce(
       (sum, item) => sum + (Number(item.quantity) || 1),
@@ -179,7 +177,7 @@ export default class CheckoutProcess {
     return items.map((item) => ({
       id: item.Id,
       name: item.Name,
-      price: getItemPrice(item),
+      price: getProductPrice(item),
       quantity: Number(item.quantity) || 1,
     }));
   }
@@ -225,6 +223,11 @@ export default class CheckoutProcess {
       }
 
       const response = await this.checkout(this.form);
+      setLocalStorage(this.key, []);
+      this.list = [];
+      this.calculateItemSubTotal();
+      this.displayOrderTotals();
+      initCartBadge();
 
       if (this.feedbackElement) {
         this.feedbackElement.textContent = `Order submitted successfully. Response: ${JSON.stringify(response)}`;
